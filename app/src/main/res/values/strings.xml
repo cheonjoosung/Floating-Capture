@@ -11,4 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="start_floating_service">Start Floating Service</string>
     <string name="image">image</string>
+    <string name="fab">fab</string>
+    <string name="capture">capture</string>
+    <string name="exit">exit</string>
 </resources>
