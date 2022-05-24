@@ -63,23 +63,24 @@ class MainActivity : AppCompatActivity() {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
                 Toast.makeText(this, "Permission Not Granted", Toast.LENGTH_SHORT).show()
+                finish()
             } else {
                 Toast.makeText(this, "Start Floating Service", Toast.LENGTH_SHORT).show()
                 startService()
             }
 
-            finish()
         }
 
     private fun startService() {
-        Intent(applicationContext, FloatingService::class.java).also {
+        Intent(this, FloatingService::class.java).also {
             startService(it)
         }
+        finish()
     }
 
     private fun stopService() {
         if (!isServiceRunningOnBackground()) {
-            Intent(applicationContext, FloatingService::class.java).also {
+            Intent(this, FloatingService::class.java).also {
                 stopService(it)
             }
         }
