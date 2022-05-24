@@ -7,12 +7,8 @@ import android.media.projection.MediaProjectionManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import com.example.floating_capture.databinding.ActivityCaptureBinding
 
-class CaptureActivity : AppCompatActivity() {
+class CaptureActivity : Activity() {
 
     companion object {
         val TAG = CaptureActivity::class.java.simpleName
@@ -21,13 +17,13 @@ class CaptureActivity : AppCompatActivity() {
         var staticResultCode = 0
     }
 
-    private lateinit var binding: ActivityCaptureBinding
+    private val SCREEN_CAPTURE_REQUEST_CODE = 9999
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityCaptureBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        /*binding = ActivityCaptureBinding.inflate(layoutInflater)
+        setContentView(binding.root)*/
 
         staticIntentData?.let {
             startCaptureService(it, staticResultCode)
@@ -37,7 +33,6 @@ class CaptureActivity : AppCompatActivity() {
     }
 
     private fun startCaptureService(intent: Intent, resultCode: Int) {
-        Log.e(TAG, "Good")
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 Intent(applicationContext, CaptureService::class.java).apply {
@@ -55,18 +50,24 @@ class CaptureActivity : AppCompatActivity() {
     private fun startProjection() {
         val projectManager =
             getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-        resultListener.launch(projectManager.createScreenCaptureIntent())
+
+        startActivityForResult(
+            projectManager.createScreenCaptureIntent(),
+            SCREEN_CAPTURE_REQUEST_CODE
+        )
     }
 
-    private val resultListener =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.let {
-                    staticIntentData = it
-                    staticResultCode = result.resultCode
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-                    startCaptureService(it, staticResultCode)
-                }
+        if (requestCode == SCREEN_CAPTURE_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) finish()
+            else {
+                staticIntentData = data!!
+                staticResultCode = resultCode
+
+                startCaptureService(data, resultCode)
             }
         }
+    }
 }

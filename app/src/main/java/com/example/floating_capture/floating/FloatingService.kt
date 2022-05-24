@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.view.*
 import android.view.animation.AnimationUtils
 import com.example.floating_capture.R
+import com.example.floating_capture.capture.CaptureActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlin.math.abs
 
@@ -84,7 +85,11 @@ class FloatingService : Service() {
             }
 
             fabCapture.setOnClickListener {
-
+                Intent(applicationContext, CaptureActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(this)
+                }
+                stopSelf()
             }
 
             fabExit.setOnClickListener {
