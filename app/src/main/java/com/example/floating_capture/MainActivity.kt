@@ -1,6 +1,5 @@
 package com.example.floating_capture
 
-import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
@@ -11,9 +10,9 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.floating_capture.databinding.ActivityMainBinding
+import com.example.floating_capture.floating.FloatingService
 
 class MainActivity : AppCompatActivity() {
 

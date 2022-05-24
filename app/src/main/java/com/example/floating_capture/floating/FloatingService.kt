@@ -1,4 +1,4 @@
-package com.example.floating_capture
+package com.example.floating_capture.floating
 
 import android.annotation.SuppressLint
 import android.app.Service
@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.IBinder
 import android.view.*
 import android.view.animation.AnimationUtils
+import com.example.floating_capture.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlin.math.abs
 
