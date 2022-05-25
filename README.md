@@ -19,7 +19,7 @@ This is "Floating-Capture" App. It has two features(Floating Button & Capture)
 
 - [Google Notification](https://developer.android.com/training/notify-user/build-notification?hl=ko)
 - [Google MediaProjection](https://developer.android.com/about/versions/12/12L/features/media-projection-large-screens?hl=ko)
-- [Googel WindowManager](https://developer.android.com/reference/android/view/WindowManager)
+- [Google WindowManager](https://developer.android.com/reference/android/view/WindowManager)
 
 ## 라이센스(License)
 
