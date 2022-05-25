@@ -1,12 +1,15 @@
 package com.example.floating_capture
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.floating_capture.databinding.ItemPictureBinding
 
+
 class PictureAdapter(
-    private val list: MutableList<String>
+    private val list: MutableList<MyFile>
 ) : RecyclerView.Adapter<PictureAdapter.PictureViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -18,20 +21,25 @@ class PictureAdapter(
     }
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(list[position])
     }
 
     override fun getItemCount(): Int = list.size
 
 
-    class PictureViewHolder(private val binding: ItemPictureBinding) : RecyclerView.ViewHolder(binding.root) {
+    class PictureViewHolder(private val binding: ItemPictureBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind() {
+        fun bind(item: MyFile) {
             binding.apply {
-                //ivImage
+                ivImage.setImageBitmap(imagePathToBitmap(item.path))
 
-                //tvTitle
+                tvTitle.text = item.name
             }
+        }
+
+        private fun imagePathToBitmap(path: String): Bitmap {
+            return BitmapFactory.decodeFile(path)
         }
     }
 
