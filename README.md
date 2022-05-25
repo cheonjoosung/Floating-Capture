@@ -7,8 +7,8 @@ This is "Floating-Capture" App. It has two features(Floating Button & Capture)
 
 <table>
     <tr>
-    <td><img src="https://github.com/cheonjoosung/Floating-Captureblob/master/image/sample1.jpg" widh="270"></td>
-    <td><img src="https://github.com/cheonjoosung/Floating-Capture/blob/master/image/sample2.jpg" widh="270"></td>
+    <td><img src="https://github.com/cheonjoosung/Floating-Capture/blob/master/image/sample1.jpg" width="270"></td>
+    <td><img src="https://github.com/cheonjoosung/Floating-Capture/blob/master/image/sample2.jpg" width="270"></td>
     </tr>
 </table>
 
