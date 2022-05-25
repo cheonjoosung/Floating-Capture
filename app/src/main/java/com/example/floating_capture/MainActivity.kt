@@ -1,18 +1,24 @@
 package com.example.floating_capture
 
 import android.app.ActivityManager
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.Settings
 import android.util.Log
+import android.widget.GridLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.floating_capture.capture.CaptureService
 import com.example.floating_capture.databinding.ActivityMainBinding
 import com.example.floating_capture.floating.FloatingService
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,10 +39,28 @@ class MainActivity : AppCompatActivity() {
                 overlayPermissionCheck()
             }
 
-            rvPicture.adapter = PictureAdapter(mutableListOf())
+            rvPicture.adapter = PictureAdapter(getFileList())
+            rvPicture.layoutManager = GridLayoutManager(applicationContext, 2)
         }
 
         stopService()
+
+
+    }
+
+    private fun getFileList(): MutableList<MyFile> {
+        val dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath + "/Screenshots/"
+
+        val dir = File(dirPath)
+        val fileList = mutableListOf<MyFile>()
+
+        dir.listFiles()?.let { list ->
+            list.forEach { file ->
+                fileList.add(MyFile(file.path, file.name))
+            }
+        }
+
+        return fileList
     }
 
     private fun overlayPermissionCheck() {
@@ -80,6 +104,10 @@ class MainActivity : AppCompatActivity() {
     private fun stopService() {
         if (!isServiceRunningOnBackground()) {
             Intent(this, FloatingService::class.java).also {
+                stopService(it)
+            }
+
+            Intent(this, CaptureService::class.java).also {
                 stopService(it)
             }
         }
